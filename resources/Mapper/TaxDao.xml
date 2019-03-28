@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sram.dao.TaxDao">
+	<sql id="base_taxcolumn_list">`tid`,`frommoneny`,`topmoney`,`rate`,`reduce`  </sql>
+	<select id="selectAll" resultType="com.sram.entity.Tax">
+		select <include refid="base_taxcolumn_list"></include>
+		from tax
+	</select>
+</mapper>

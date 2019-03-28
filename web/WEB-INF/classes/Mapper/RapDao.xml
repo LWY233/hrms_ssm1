@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sram.dao.RapDao">
+    <sql id="base_rapcolumn_list">`id`,`month`,`reward`,`punishment`,`because` ,`eid` </sql>
+    <select id="page" resultType="com.sram.entity.RewardAndPunish" parameterType="com.sram.web.common.PageParam">
+        select r.id ,r.month ,r.reward ,r.punishment,r.because,r.eid
+        from employees e, reward_and_punish r where e.eid = r.eid
+        <if test="params!=null">
+            <if test="params.employees.eid !=null and params.employees.eid!=''">
+                AND e.eid = #{params.employees.eid}
+            </if>
+            <if test="params.employees.eno !=null and params.employees.eno!=''">
+                and e.eno like concat('%',#{params.employees.eno},'%')
+            </if>
+            <if test="params.employees.ename !=null and params.employees.ename!=''">
+                and e.ename like concat('%',#{params.employees.ename},'%')
+            </if>
+            <if test="params.employees.esex !=null and params.employees.esex!=''">
+                and e.esex like concat('%',#{params.employees.esex},'%')
+            </if>
+            <if test="params.employees.brity!=null and params.employees.brity !=''">
+                AND e.`brity` = #{params.employees.brity}
+            </if>
+            <if test="params.employees.nationality !=null and params.employees.nationality!=''">
+                and e.nationality like concat('%',#{params.employees.nationality},'%')
+            </if>
+            <if test="params.employees.idCard !=null and params.employees.idCard!=''">
+                and e.id_card like concat('%',#{params.employees.idCard},'%')
+            </if>
+        </if>
+        <!-- <if test="params2 !=null">
+            <if test="params2 ==0">
+                and m.state >=0
+            </if>
+            <if test="params2 ==1">
+                and m.state =1
+            </if>
+        </if> -->
+        ORDER BY LENGTH(r.month) desc , r.month desc,r.reward desc
+        <if test="page!=null"> limit #{page},#{pageSize}
+        </if>
+    </select>
+    <update id="updaterap" parameterType="com.sram.entity.RewardAndPunish">
+        update reward_and_punish
+        <set>
+            <if test="id != null"> id = #{id},
+            </if>
+            <if test="reward != null"> reward = #{reward},
+            </if>
+            <if test="punishment != null"> punishment = #{punishment},
+            </if>
+            <if test="because != null"> because = #{because},
+            </if>
+            <if test="month != null"> month = #{month},
+            </if>
+            <if test="eid != null"> eid = #{eid},
+            </if>
+        </set>
+        where id = #{id}
+
+    </update>
+
+    <insert id="insertrap" parameterType="com.sram.entity.RewardAndPunish">
+        insert into reward_and_punish
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null"> id,
+            </if>
+            <if test="reward != null"> reward,
+            </if>
+            <if test="punishment != null"> punishment,
+            </if>
+            <if test="because != null"> because,
+            </if>
+            <if test="month != null"> month,
+            </if>
+            <if test="eid != null">eid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null"> #{id},
+            </if>
+            <if test="reward != null"> #{reward},
+            </if>
+            <if test="punishment != null"> #{punishment},
+            </if>
+            <if test="because != null"> #{because},
+            </if>
+            <if test="month != null"> #{month},
+            </if>
+            <if test="eid != null">#{eid},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByRap" resultType="com.sram.entity.RewardAndPunish" parameterType="com.sram.entity.RewardAndPunish">
+        select <include refid="base_rapcolumn_list"></include>
+        from reward_and_punish  where eid = #{eid} and month =  #{month}
+
+    </select>
+
+    <select id="getrapByid" resultType="com.sram.entity.RewardAndPunish" parameterType="INTEGER">
+        select <include refid="base_rapcolumn_list"></include>
+        from reward_and_punish  where id = #{id}
+
+    </select>
+</mapper>

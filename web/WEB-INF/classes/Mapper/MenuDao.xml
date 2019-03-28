@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sram.dao.MenuDao">
+
+    <sql id="base_menucolumn_list"> mid,title,main,`index`,parent_id,usertype,code </sql>
+    <select id="getAll" resultType="com.sram.entity.Menu">
+        select <include refid="base_menucolumn_list"></include>
+        from menu where main = 0 and usertype >= #{0} order by `index` asc
+    </select>
+    <select id="getChilds" resultType="com.sram.entity.Menu">
+        select <include refid="base_menucolumn_list"></include>
+        from menu where main = 1 and parent_id = #{0} and usertype >= #{1} order by `index` asc
+    </select>
+</mapper>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sram.dao.EmployeesDao">
+    <sql id="base_employeescolumn_list"> eid,eno,ename,esex,nationality,brity,political_party,culture_level,family_place,id_card,mobile,hiredate,title,upperno,did,uid,cid </sql>
+
+    <select id="selectOne" parameterType="String" resultType="com.sram.entity.Employees">
+        select <include refid="base_employeescolumn_list"></include>
+        from employees where eno = #{eno}
+    </select>
+    <select id="selectAll" resultType="com.sram.entity.Employees">
+        select <include refid="base_employeescolumn_list"></include>
+        from employees
+    </select>
+    <select id="selectDepart" parameterType="INTEGER" resultType="com.sram.entity.Employees">
+        select <include refid="base_employeescolumn_list"></include>
+        from employees where did = #{did}
+    </select>
+    <update id="update" parameterType="com.sram.entity.Employees">
+        update employees
+        <set>
+            <if test="eid != null"> eid = #{eid,jdbcType=INTEGER},
+            </if>
+            <if test="ename != null"> ename = #{ename,jdbcType=VARCHAR},
+            </if>
+            <if test="esex != null"> esex = #{esex,jdbcType=VARCHAR},
+            </if>
+            <if test="nationality != null"> nationality = #{nationality,jdbcType=VARCHAR},
+            </if>
+            <if test="brity != null"> brity = #{brity,jdbcType=VARCHAR},
+            </if>
+            <if test="politicalParty != null"> political_party = #{politicalParty,jdbcType=VARCHAR},
+            </if>
+            <if test="cultureLevel != null"> culture_level = #{cultureLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="familyPlace != null"> family_place = #{familyPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="idCard != null"> id_card = #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null"> mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="hiredate != null"> hiredate = #{hiredate,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null"> title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="upperno != null"> upperno = #{upperno,jdbcType=VARCHAR},
+            </if>
+            <if test="did != null"> did = #{did,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null"> uid = #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null"> cid = #{cid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where eno = #{eno,jdbcType=VARCHAR}
+    </update>
+    <delete id="delete" parameterType="String">
+		delete from employees where eno = #{eno}
+	</delete>
+    <insert id="insert" parameterType="com.sram.entity.Employees">
+        insert into employees
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="eid != null"> eid,</if>
+            <if test="eno != null"> eno,</if>
+            <if test="ename != null"> ename,</if>
+            <if test="esex != null"> esex,</if>
+            <if test="nationality != null"> nationality,</if>
+            <if test="brity != null"> brity,</if>
+            <if test="politicalParty != null"> political_party,</if>
+            <if test="cultureLevel != null"> culture_level,</if>
+            <if test="familyPlace != null"> family_place,</if>
+            <if test="idCard != null"> id_card,</if>
+            <if test="mobile != null"> mobile,</if>
+            <if test="hiredate != null"> hiredate,</if>
+            <if test="title != null"> title,</if>
+            <if test="upperno != null"> upperno,</if>
+            <if test="did != null"> did,</if>
+            <if test="uid != null"> uid,</if>
+            <if test="cid != null"> cid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="eid != null"> #{eid,jdbcType=INTEGER},
+            </if>
+            <if test="eno != null"> #{eno,jdbcType=INTEGER},
+            </if>
+            <if test="ename != null"> #{ename,jdbcType=VARCHAR},
+            </if>
+            <if test="esex != null"> #{esex,jdbcType=VARCHAR},
+            </if>
+            <if test="nationality != null"> #{nationality,jdbcType=VARCHAR},
+            </if>
+            <if test="brity != null"> #{brity,jdbcType=VARCHAR},
+            </if>
+            <if test="politicalParty != null"> #{politicalParty,jdbcType=VARCHAR},
+            </if>
+            <if test="cultureLevel != null"> #{cultureLevel,jdbcType=VARCHAR},
+            </if>
+            <if test="familyPlace != null"> #{familyPlace,jdbcType=VARCHAR},
+            </if>
+            <if test="idCard != null"> #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null"> #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="hiredate != null"> #{hiredate,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null"> #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="upperno != null"> #{upperno,jdbcType=VARCHAR},
+            </if>
+            <if test="did != null"> #{did,jdbcType=INTEGER},
+            </if>
+            <if test="uid != null"> #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="cid != null"> #{cid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="page" parameterType="com.sram.web.common.PageParam" resultType="com.sram.entity.Employees">
+        select <include refid="base_employeescolumn_list"></include>
+        from employees where 1=1
+        <if test="params!=null">
+            <if test="params.eid !=null and params.eid !=''">
+                AND `eid` = #{params.eid}
+            </if>
+            <if test="params.eno !=null and params.eno !=''">
+                AND `eno` like concat('%',#{params.eno},'%')
+            </if>
+            <if test="params.ename !=null and params.ename !=''">
+                AND `ename` like concat('%',#{params.ename},'%')
+            </if>
+            <if test="params.esex !=null and params.esex !=''">
+                AND `esex` = like concat('%',#{params.esex},'%')
+            </if>
+            <if test="params.nationality !=null and params.nationality !=''">
+                AND `nationality` like concat('%',#{params.nationality},'%')
+            </if>
+            <if test="params.brity !=null and params.brity !=''">
+                AND `brity` like concat('%',#{params.brity},'%')
+            </if>
+            <if test="params.politicalParty !=null and params.politicalParty !=''">
+                AND political_party like concat('%',#{params.politicalParty},'%')
+            </if>
+            <if test="params.cultureLevel !=null and params.cultureLevel !=''">
+                AND `culture_level` = #{params.cultureLevel}
+            </if>
+            <if test="params.familyPlace !=null and params.familyPlace !=''">
+                AND `family_place` like concat('%',#{params.familyPlace},'%')
+            </if>
+            <if test="params.idCard !=null and params.idCard !=''">
+                AND `id_card` like concat('%',#{params.idCard},'%')
+            </if>
+            <if test="params.mobile !=null and params.mobile !=''">
+                AND `mobile` = like concat('%',#{params.mobile},'%')
+            </if>
+            <if test="params.hiredate !=null and params.hiredate !=''">
+                AND `hiredate` like concat('%',#{params.hiredate},'%')
+            </if>
+            <if test="params.title !=null and params.title !=''">
+                AND `title` like concat('%',#{params.title},'%')
+            </if>
+            <if test="params.upperno !=null and params.upperno !=''">
+                AND upperno like concat('%',#{params.upperno},'%')
+            </if>
+            <if test="params.did !=null and params.did !=''">
+                AND `did` = #{params.did}
+            </if>
+            <if test="params.uid !=null and params.uid !=''">
+                AND `uid` like concat('%',#{params.uid},'%')
+            </if>
+            <if test="params.cid !=null and params.cid !=''">
+                AND `cid` like concat('%',#{params.cid},'%')
+            </if>
+        </if>
+        <if test="page!=null"> limit #{page},#{pageSize}
+        </if>
+    </select>
+    <select id="selectemploy" parameterType="com.sram.entity.Employees" resultType="com.sram.entity.Employees">
+        select <include refid="base_employeescolumn_list"></include>
+        from employees where 1=1
+        <if test="eid !=null and eid !=''">
+            AND `eid` = #{eid}
+        </if>
+        <if test="eno !=null and eno !=''">
+            AND `eno` = #{eno}
+        </if>
+        <if test="ename !=null and ename !=''">
+            AND `ename` like concat('%',#{ename},'%')
+        </if>
+        <if test="esex !=null and esex !=''">
+            AND `esex` = like concat('%',#{esex},'%')
+        </if>
+        <if test="nationality !=null and nationality !=''">
+            AND `nationality` like concat('%',#{nationality},'%')
+        </if>
+        <if test="brity !=null and brity !=''">
+            AND `brity` like concat('%',#{brity},'%')
+        </if>
+        <if test="politicalParty !=null and politicalParty !=''">
+            AND political_party like concat('%',#{politicalParty},'%')
+        </if>
+        <if test="cultureLevel !=null and cultureLevel !=''">
+            AND `culture_level` = #{cultureLevel}
+        </if>
+        <if test="familyPlace !=null and familyPlace !=''">
+            AND `family_place` like concat('%',#{familyPlace},'%')
+        </if>
+        <if test="idCard !=null and idCard !=''">
+            AND `id_card` = #{idCard}
+        </if>
+        <if test="mobile !=null and mobile !=''">
+            AND `mobile` = like concat('%',#{params.mobile},'%')
+        </if>
+        <if test="hiredate !=null and hiredate !=''">
+            AND `hiredate` like concat('%',#{hiredate},'%')
+        </if>
+        <if test="title !=null and title !=''">
+            AND `title` like concat('%',#{title},'%')
+        </if>
+        <if test="upperno !=null and upperno !=''">
+            AND upperno like concat('%',#{upperno},'%')
+        </if>
+        <if test="did !=null and did !=''">
+            AND `did` = #{params.did}
+        </if>
+        <if test="uid !=null and uid !=''">
+            AND `uid` like concat('%',#{uid},'%')
+        </if>
+        <if test="cid !=null and cid !=''">
+            AND `cid` like concat('%',#{cid},'%')
+        </if>
+    </select>
+    <select id="getEmployees" resultType="com.sram.entity.Employees" parameterType="INTEGER">
+        select <include refid="base_employeescolumn_list"></include>
+        from employees where eid = #{eid}
+    </select>
+
+    <select id="getEmployeesByEno" resultType="com.sram.entity.Employees" >
+        select <include refid="base_employeescolumn_list"></include>
+        from employees where eno = #{eno}
+    </select>
+
+    <select id="getEmployeesByEmployees" resultType="com.sram.entity.Employees" parameterType="com.sram.entity.Employees">
+        select <include refid="base_employeescolumn_list"></include>
+        from employees where 1=1
+
+        <if test="eid !=null and eid!=''">
+            AND eid = #{eid}
+        </if>
+        <if test="eno !=null and eno!=''">
+            and eno =#{eno}
+        </if>
+        <if test="ename !=null and ename!=''">
+            and ename =#{ename}
+        </if>
+        <if test="esex !=null and esex!=''">
+            and esex =#{esex}
+        </if>
+        <if test="brity!=null and brity !=''">
+            AND `brity` = #{brity}
+        </if>
+        <if test="nationality !=null and nationality!=''">
+            and nationality =#{nationality}
+        </if>
+        <if test="idCard !=null and idCard!=''">
+            and idCard =#{idCard}
+        </if>
+
+    </select>
+</mapper>

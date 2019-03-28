@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+.info{ background-color:#fff; border-radius:5px; margin:10px; width:960px; }
+.info div{ padding:10px 10px; float: left; width:960px;}
+.info label{font-size:16px; color:#979797; font-family: 微软雅黑;}
+.info_top label{font-size:20px; color:#000}
+.info_bottom{border-top:1px solid #e7e7e7}
+.info .tba{width:100%;}
+
+table{border-collapse: collapse; width:97.5%; color:#696969}
+table,td,th{ border:1px solid #e7e7e7; text-align: center;}
+td,th{padding:5px;}
+tr:hover{background-color:#f7f7f7}
+td img{width:32px; height:32px; border:0px none #fff;}
+

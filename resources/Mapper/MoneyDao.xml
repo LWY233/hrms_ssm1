@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sram.dao.MoneyDao">
+    <select id="page" resultType="com.sram.entity.Money" parameterType="com.sram.web.common.PageParam">
+        select m.mid ,m.basemoney ,m.month ,m.work_overtime ,m.subsidization ,m.reality_money ,m.state,m.qqmoney,m.rapall,m.payment,m.eid
+        from employees e, money m where e.eid = m.eid
+        <if test="params!=null">
+            <if test="params.employees.eid !=null and params.employees.eid!=''">
+                AND e.eid = #{params.employees.eid}
+            </if>
+            <if test="params.employees.eno !=null and params.employees.eno!=''">
+                and e.eno like concat('%',#{params.employees.eno},'%')
+            </if>
+            <if test="params.employees.ename !=null and params.employees.ename!=''">
+                and e.ename like concat('%',#{params.employees.ename},'%')
+            </if>
+            <if test="params.employees.esex !=null and params.employees.esex!=''">
+                and e.esex like concat('%',#{params.employees.esex},'%')
+            </if>
+            <if test="params.employees.brity!=null and params.employees.brity !=''">
+                AND e.`brity` = #{params.employees.brity}
+            </if>
+            <if test="params.employees.nationality !=null and params.employees.nationality!=''">
+                and e.nationality like concat('%',#{params.employees.nationality},'%')
+            </if>
+            <if test="params.employees.idCard !=null and params.employees.idCard!=''">
+                and e.id_card like concat('%',#{params.employees.idCard},'%')
+            </if>
+        </if>
+        <!-- <if test="params2 !=null">
+            <if test="params2 ==0">
+                and m.state >=0
+            </if>
+            <if test="params2 ==1">
+                and m.state =1
+            </if>
+        </if> -->
+        ORDER BY m.state asc,m.reality_money desc
+        <if test="page!=null"> limit #{page},#{pageSize}
+        </if>
+    </select>
+    <update id="updatemoney" parameterType="com.sram.entity.Money">
+        update money
+        <set>
+            <if test="basemoney != null"> basemoney = #{basemoney},
+            </if>
+            <if test="month != null"> month = #{month},
+            </if>
+            <if test="workOvertime != null"> work_overtime = #{workOvertime},
+            </if>
+            <if test="subsidization != null"> subsidization = #{subsidization},
+            </if>
+            <if test="realityMoney != null"> reality_money = #{realityMoney},
+            </if>
+            <if test="qqmoney != null"> qqmoney = #{qqmoney},
+            </if>
+            <if test="payment != null"> payment = #{payment},
+            </if>
+            <if test="rapall != null"> rapall = #{rapall},
+            </if>
+            <if test="state != null"> state = #{state},
+            </if>
+        </set>
+        where mid = #{mid}
+
+    </update>
+
+    <insert id="insertmoney" parameterType="com.sram.entity.Money">
+        insert into money
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mid != null"> mid,
+            </if>
+            <if test="basemoney != null"> basemoney,
+            </if>
+            <if test="month != null"> month,
+            </if>
+            <if test="workOvertime != null"> work_overtime,
+            </if>
+            <if test="subsidization != null"> subsidization,
+            </if>
+            <if test="realityMoney != null"> reality_money,
+            </if>
+            <if test="qqmoney != null"> qqmoney,
+            </if>
+            <if test="payment != null"> payment,
+            </if>
+            <if test="rapall != null"> rapall,
+            </if>
+            <if test="state != null"> state,
+            </if>
+            <if test="eid != null"> eid,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mid != null"> #{mid},
+            </if>
+            <if test="basemoney != null"> #{basemoney},
+            </if>
+            <if test="month != null"> #{month},
+            </if>
+            <if test="workOvertime != null"> #{workOvertime},
+            </if>
+            <if test="subsidization != null"> #{subsidization},
+            </if>
+            <if test="realityMoney != null"> #{realityMoney},
+            </if>
+            <if test="qqmoney != null"> #{qqmoney},
+            </if>
+            <if test="payment != null"> #{payment},
+            </if>
+            <if test="rapall != null"> #{rapall},
+            </if>
+            <if test="state != null"> #{state},
+            </if>
+            <if test="eid != null"> #{eid},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getmoneyByMoney" resultType="com.sram.entity.Money" parameterType="com.sram.entity.Money">
+		select mid ,basemoney ,month ,work_overtime ,subsidization ,reality_money ,state,qqmoney,rapall,payment,eid
+		from money  where eid = #{eid} and month =  #{month}
+
+	</select>
+
+    <select id="getmoneyByid" resultType="com.sram.entity.Money" parameterType="INTEGER">
+		select mid ,basemoney ,month ,work_overtime ,subsidization ,reality_money ,state,qqmoney,rapall,payment,eid
+		from money  where mid = #{mid}
+
+	</select>
+</mapper>

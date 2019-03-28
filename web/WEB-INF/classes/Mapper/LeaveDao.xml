@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sram.dao.LeaveDao">
+	<sql id="base_leavecolumn_list"> id,`name`,daynumber,fromday,today,because,departmentid,eno,state </sql>
+	<select id="selectAll" resultType="com.sram.entity.Leave">
+		select <include refid="base_leavecolumn_list"></include>
+		from `leave`
+	</select>
+	<select id="selectOne" resultType="com.sram.entity.Leave">
+		select <include refid="base_leavecolumn_list"></include>
+		from `leave` where id = #{id}
+	</select>
+	<select id="select" resultType="com.sram.entity.Leave" parameterType="com.sram.entity.Leave">
+		select <include refid="base_leavecolumn_list"></include>
+		from `leave` where 1 = 1
+		<if test="id !=null and id !=''">
+			AND id = #{id}
+		</if>
+		<if test="name !=null and name !=''">
+			AND `name` = #{name}
+		</if>
+		<if test="eno !=null and eno !=''">
+			AND eno = #{eno}
+		</if>
+	</select>
+	<update id="update" parameterType="com.sram.entity.Leave">
+		update `leave`
+		<set>
+			<if test="name != null"> `name` = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="daynumber != null"> daynumber = #{daynumber,jdbcType=INTEGER},
+			</if>
+			<if test="fromday != null"> mobile = #{fromday,jdbcType=VARCHAR},
+			</if>
+			<if test="today != null"> today = #{today,jdbcType=VARCHAR},
+			</if>
+			<if test="because != null"> because = #{because,jdbcType=VARCHAR},
+			</if>
+			<if test="departmentid != null"> `departmentid` = #{departmentid,jdbcType=INTEGER},
+			</if>
+			<if test="eno != null"> eno = #{eno,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null"> state = #{state,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<insert id="insert" parameterType="com.sram.entity.Leave">
+		insert into `leave`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="name != null">`name`,</if>
+			<if test="daynumber != null">daynumber,</if>
+			<if test="fromday != null">fromday,</if>
+			<if test="today != null">today,</if>
+			<if test="because != null">because,</if>
+			<if test="departmentid != null">departmentid,</if>
+			<if test="eno != null">eno,</if>
+			<if test="state != null">state,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null"> #{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null"> #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="daynumber != null"> #{daynumber,jdbcType=INTEGER},
+			</if>
+			<if test="fromday != null"> #{fromday,jdbcType=VARCHAR},
+			</if>
+			<if test="today != null"> #{today,jdbcType=VARCHAR},
+			</if>
+			<if test="because != null"> #{because,jdbcType=VARCHAR},
+			</if>
+			<if test="departmentid != null"> #{departmentid,jdbcType=INTEGER},
+			</if>
+			<if test="eno != null"> #{eno,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null"> #{state,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<delete id="delete" parameterType="INTEGER">
+		delete from `leave` where id = #{id}
+	</delete>
+	<select id="page" parameterType="com.sram.web.common.PageParam" resultType="com.sram.entity.Leave">
+		select <include refid="base_leavecolumn_list"></include>
+		from `leave` where 1 = 1
+		<if test="params!=null">
+			<if test="params.id !=null and params.id!=''">
+			AND `id` = #{params.id}
+			</if>
+			<if test="params.name !=null and params.name!=''">
+			 AND `name` like concat('%',#{params.name},'%')
+			</if>
+			<if test="params.daynumber !=null and params.daynumber!=''">
+			 AND `daynumber` like concat('%',#{params.daynumber},'%')
+			</if>
+			<if test="params.fromday !=null and params.fromday!=''">
+			 AND `fromday` = like concat('%',#{params.fromday},'%')
+			</if>
+			<if test="params.today !=null and params.today!=''">
+			 AND `today` like concat('%',#{params.today},'%')
+			</if>
+			<if test="params.because !=null and params.because!=''">
+			 AND `because` like concat('%',#{params.because},'%')
+			</if>
+			<if test="params.eno !=null and params.eno!=''">
+			 AND eno like concat('%',#{params.eno},'%')
+			</if>
+			<if test="params.state !=null and params.state!=''">
+			 AND state like concat('%',#{params.state},'%')
+			</if>
+		</if>
+		<if test="page!=null"> limit #{page},#{pageSize}
+		</if>
+	</select>
+</mapper>
