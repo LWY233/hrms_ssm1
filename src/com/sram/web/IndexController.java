@@ -61,6 +61,7 @@ public class IndexController {
 			request.getSession().setAttribute("loginUser", user);
 			return "redirect:/admin";
 		}
+		//sfasfsafsafsaf
 	}
 	
 	@RequestMapping("/left")
