@@ -20,32 +20,60 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * 主页的Controller
+ */
 @Controller
 public class IndexController {
-	
+	/**
+	 * 用户service
+	 */
 	@Autowired
 	private UserService usersservice;
-	
+	/**
+	 * 请假service
+	 */
 	@Autowired
 	private LeaveService leaveservice;
-	
+	/**
+	 * 部门service
+	 */
 	@Autowired
 	private DepartmentsService departService;
-	
+	/**
+	 * 员工service
+	 */
 	@Autowired
 	private EmployeesService employeesService;
-	
+
+	/**
+	 * 跳转用户登录页面
+	 * @return
+	 */
 	@RequestMapping("/")
 	public String adminLogin(){
 		return "pages/login";
-	}	
-	
+	}
+
+	/**
+	 * 跳转到首页
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping("/admin")
 	public String admin(ModelMap model) throws Exception{
 		//加载首页的数据
 		return "pages/main";
 	}
-	
+
+	/**
+	 * 用户登录验证
+	 * @param uno
+	 * @param password
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/login")
 	public String main(String uno,String password,HttpServletRequest request){
 		Users user = null;
@@ -61,7 +89,6 @@ public class IndexController {
 			request.getSession().setAttribute("loginUser", user);
 			return "redirect:/admin";
 		}
-		//sfasfsafsafsaf
 	}
 	
 	@RequestMapping("/left")
@@ -101,17 +128,31 @@ public class IndexController {
 	public String imgtable(){
 		return "pages/imgtable";
 	}
-	
+
+	/**
+	 * 跳转主页
+	 * @return
+	 */
 	@RequestMapping("/index")
 	public String top(){
 		return "pages/index";
 	}
-	
+
+	/**
+	 * 错误页
+	 * @return
+	 */
 	@RequestMapping("/error")
 	public String error(){
 		return "pages/error";
 	}
-	
+
+	/**
+	 * 跳转登出页
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value="/logout")
 	public String logout(HttpServletRequest request,HttpServletResponse response){
 		request.getSession().removeAttribute("loginUser");

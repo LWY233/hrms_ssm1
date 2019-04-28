@@ -18,17 +18,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * 员工信息Controller
+ */
 @Controller
 @RequestMapping(value = "/employees",method = {RequestMethod.GET,RequestMethod.POST})
 public class EmployeesController {
+    /**
+     * 员工信息Service
+     */
     @Autowired
     private EmployeesService employeesService;
-
+    /**
+     * 部门信息Service
+     */
     @Autowired
     private DepartmentsService departService;
-
+    /**
+     * 用户Service
+     */
     @Autowired
     private UserService usersServcie;
+
 
     @RequestMapping("/add")
     public String add(HttpServletRequest request){
